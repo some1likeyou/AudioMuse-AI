@@ -1,0 +1,579 @@
+# Chinese translations for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-01-19 11:13+0800\n"
+"PO-Revision-Date: 2026-01-19 11:13+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh\n"
+"Language-Team: zh <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: app.py:134
+msgid "Home Page"
+msgstr "首页"
+
+#: templates/index.html:8
+msgid "AudioMuse-AI - Analysis and Clustering"
+msgstr "AudioMuse-AI - 分析与聚类"
+
+#: templates/index.html:9
+msgid "Discover new playlists by analyzing your music's unique fingerprint."
+msgstr "通过分析音乐的唯一指纹来发现新的播放列表。"
+
+#: templates/index.html:13
+msgid "Basic"
+msgstr "基础"
+
+#: templates/index.html:14
+msgid "Advanced"
+msgstr "高级"
+
+#: templates/index.html:21
+msgid "Analysis Parameters"
+msgstr "分析参数"
+
+#: templates/index.html:25
+msgid "Number of Recent Albums:"
+msgstr "最近专辑数量："
+
+#: templates/index.html:28
+msgid ""
+"How many recently added albums to analyze. Set to 0 to analyze your "
+"entire music library. Use a smaller number (like 5-10) to quickly test "
+"new additions without re-analyzing everything."
+msgstr "要分析的最近添加专辑数量。设置为 0 可分析整个音乐库。使用较小的数字（如 5-10）可以快速测试新内容而无需重新分析所有内容。"
+
+#: templates/index.html:35
+msgid "Top N Moods:"
+msgstr "前 N 个情绪："
+
+#: templates/index.html:38
+msgid ""
+"How many dominant moods to identify for each song (e.g., energetic, calm,"
+" dark). Higher numbers capture more subtle moods but use more processing "
+"power. Default of 5 works well for most libraries."
+msgstr "为每首歌识别多少种主要情绪（例如：活力、平静、阴暗）。数字越高能捕捉越细微的情绪，但需要更多处理能力。默认 5 适合大多数音乐库。"
+
+#: templates/index.html:47
+msgid "Clustering Parameters"
+msgstr "聚类参数"
+
+#: templates/index.html:51 templates/index.html:61
+msgid "Clustering Algorithm:"
+msgstr "聚类算法："
+
+#: templates/index.html:54
+msgid ""
+"The method used to group similar songs together. K-Means is recommended "
+"for most users - it's fast and creates balanced playlists. Advanced users"
+" can try other algorithms."
+msgstr ""
+
+#: templates/index.html:57 templates/index.html:68
+msgid "K-Means"
+msgstr "K-Means"
+
+#: templates/index.html:64
+msgid ""
+"K-Means: Balanced groups (recommended). DBSCAN: Finds natural clusters of"
+" any shape. GMM: Softer boundaries between groups. Spectral: Good for "
+"complex patterns."
+msgstr "K-Means：均衡的分组（推荐）。DBSCAN：找到任意形状的自然聚类。GMM：组之间边界更柔和。Spectral：适合复杂模式。"
+
+#: templates/index.html:69
+msgid "DBSCAN"
+msgstr "DBSCAN"
+
+#: templates/index.html:70
+msgid "GMM"
+msgstr "GMM"
+
+#: templates/index.html:71
+msgid "Spectral"
+msgstr "Spectral"
+
+#: templates/index.html:76
+msgid "TOP Playlist Number:"
+msgstr "TOP 播放列表数量："
+
+#: templates/index.html:79
+msgid ""
+"How many playlists to create from your library. More playlists means "
+"smaller, more focused collections. Try 8-12 for a medium library "
+"(1000-5000 songs)."
+msgstr "从音乐库创建多少个播放列表。更多的播放列表意味着更小、更专注的集合。中型音乐库（1000-5000 首歌曲）尝试 8-12 个。"
+
+#: templates/index.html:86
+msgid "Clustering Runs:"
+msgstr "聚类运行次数："
+
+#: templates/index.html:89
+msgid ""
+"How many times to try different groupings to find the best playlists. "
+"More runs = better results but takes longer. 5000 is a good balance for "
+"most libraries."
+msgstr "尝试不同分组的次数以找到最佳播放列表。更多运行 = 更好的结果但需要更长时间。5000 对于大多数音乐库是一个很好的平衡。"
+
+#: templates/index.html:96
+msgid "Max Distance:"
+msgstr "最大距离："
+
+#: templates/index.html:99
+msgid ""
+"Maximum sonic difference allowed between songs in the same playlist. "
+"Lower values = more similar songs within each playlist. Range: 0.0 "
+"(identical) to 1.0 (very different)."
+msgstr "同一播放列表中歌曲之间允许的最大声音差异。较低的值 = 每个播放列表中更相似的歌曲。范围：0.0（相同）到 1.0（非常不同）。"
+
+#: templates/index.html:106
+msgid "Max Songs Per Cluster:"
+msgstr "每个聚类的最大歌曲数："
+
+#: templates/index.html:109
+msgid ""
+"Limit playlist size to this many songs. Set to 0 for no limit. Useful to "
+"prevent huge playlists that are hard to listen through."
+msgstr "将播放列表大小限制为这么多歌曲。设置为 0 表示无限制。用于防止创建难以听完的巨大播放列表。"
+
+#: templates/index.html:116
+msgid "PCA Components Min:"
+msgstr "PCA 组件最小值："
+
+#: templates/index.html:119
+msgid ""
+"Principal Component Analysis simplifies song data. Minimum number of "
+"components to use (0 to disable PCA). Lower = faster but less accurate. "
+"Advanced users only."
+msgstr "主成分分析简化歌曲数据。使用的最小组件数（0 禁用 PCA）。较低 = 更快但不太准确。仅限高级用户。"
+
+#: templates/index.html:126
+msgid "PCA Components Max:"
+msgstr "PCA 组件最大值："
+
+#: templates/index.html:129
+msgid ""
+"Maximum number of PCA components. Higher = more detailed analysis but "
+"slower. For embeddings: try 50-199. For feature vectors: try 8-20."
+msgstr "PCA 组件的最大数量。较高 = 更详细的分析但更慢。对于嵌入：尝试 50-199。对于特征向量：尝试 8-20。"
+
+#: templates/index.html:136
+msgid "Min Songs Per Genre for Stratification:"
+msgstr "分层采样的每流派最少歌曲数："
+
+#: templates/index.html:139
+msgid ""
+"When testing different clustering approaches, sample at least this many "
+"songs from each genre. Ensures all music styles are represented. Default:"
+" 100."
+msgstr "测试不同的聚类方法时，从每个流派至少采样这么多歌曲。确保所有音乐风格都被代表。默认值：100。"
+
+#: templates/index.html:146
+msgid "Stratified Sampling Target Percentile:"
+msgstr "分层采样目标百分位："
+
+#: templates/index.html:149
+msgid ""
+"Percentile used to determine target sample size per genre (0-100). 50 "
+"means use median genre size. Higher = more songs sampled. Advanced users "
+"only."
+msgstr "用于确定每个流派目标样本量的百分位（0-100）。50 表示使用流派中位数大小。较高 = 更多歌曲被采样。仅限高级用户。"
+
+#: templates/index.html:156
+msgid "Diversity Score Weight:"
+msgstr "多样性分数权重："
+
+#: templates/index.html:159
+msgid ""
+"How much to prioritize different moods BETWEEN playlists. Higher = each "
+"playlist has a more unique vibe. Default: 2.0"
+msgstr "在播放列表之间优先考虑不同情绪的程度。较高 = 每个播放列表都有更独特的氛围。默认值：2.0"
+
+#: templates/index.html:166
+msgid "Purity Score Weight:"
+msgstr "纯净度分数权重："
+
+#: templates/index.html:169
+msgid ""
+"How much to prioritize similar moods WITHIN each playlist. Higher = more "
+"consistent vibe within playlists. Default: 1.0"
+msgstr "在每个播放列表内优先考虑相似情绪的程度。较高 = 播放列表内更一致的氛围。默认值：1.0"
+
+#: templates/index.html:176
+msgid "Other Feature Diversity Weight:"
+msgstr "其他特征多样性权重："
+
+#: templates/index.html:179
+msgid ""
+"Like Diversity Score but for technical audio features (tempo, key, etc.) "
+"instead of moods. Usually keep at 0 to focus on moods."
+msgstr "类似于多样性分数，但针对技术音频特征（节奏、key 等）而非情绪。通常保持为 0 以专注于情绪。"
+
+#: templates/index.html:186
+msgid "Other Feature Purity Weight:"
+msgstr "其他特征纯净度权重："
+
+#: templates/index.html:189
+msgid ""
+"Like Purity Score but for technical audio features instead of moods. "
+"Usually keep at 0 to focus on moods."
+msgstr "类似于纯净度分数，但针对技术音频特征而非情绪。通常保持为 0 以专注于情绪。"
+
+#: templates/index.html:196
+msgid "Silhouette Score Weight:"
+msgstr "轮廓分数权重："
+
+#: templates/index.html:199
+msgid ""
+"Measures how well-separated clusters are. Higher = prioritize clear "
+"boundaries between playlists. Usually keep at 0 unless experimenting."
+msgstr "衡量聚类的分离程度。较高 = 优先考虑播放列表之间的清晰边界。通常保持为 0，除非实验。"
+
+#: templates/index.html:206
+msgid "Davies-Bouldin Score Weight:"
+msgstr "Davies-Bouldin 分数权重："
+
+#: templates/index.html:209
+msgid ""
+"Another cluster separation measure. Lower is better (so this score is "
+"minimized). Usually keep at 0 unless experimenting."
+msgstr "另一种聚类分离度量。越低越好（因此该分数被最小化）。通常保持为 0，除非实验。"
+
+#: templates/index.html:216
+msgid "Calinski-Harabasz Score Weight:"
+msgstr "Calinski-Harabasz 分数权重："
+
+#: templates/index.html:219
+msgid ""
+"Measures cluster quality by comparing within-cluster vs between-cluster "
+"variance. Usually keep at 0 unless experimenting."
+msgstr "通过比较组内与组间方差来衡量聚类质量。通常保持为 0，除非实验。"
+
+#: templates/index.html:226
+msgid "Use Embeddings for Clustering:"
+msgstr "使用嵌入进行聚类："
+
+#: templates/index.html:229
+msgid ""
+"Checked: Use AI-learned song fingerprints (more accurate). Unchecked: Use"
+" calculated features like tempo and energy (faster). Recommended: keep "
+"checked."
+msgstr "选中：使用 AI 学习到的歌曲指纹（更准确）。未选中：使用计算的特征如节奏和能量（更快）。建议：保持选中。"
+
+#: templates/index.html:238
+msgid "K-Means Specific:"
+msgstr "K-Means 特定参数："
+
+#: templates/index.html:242
+msgid "Min Clusters:"
+msgstr "最小聚类数："
+
+#: templates/index.html:245
+msgid ""
+"Minimum number of playlists K-Means can create. Lower = fewer, larger "
+"playlists. Try 40 for a medium library."
+msgstr "K-Means 可以创建的最小播放列表数量。较低 = 较少、较大的播放列表。中型音乐库尝试 40。"
+
+#: templates/index.html:252
+msgid "Max Clusters:"
+msgstr "最大聚类数："
+
+#: templates/index.html:255
+msgid ""
+"Maximum number of playlists K-Means can create. Higher = more, smaller "
+"playlists. Try 100 for a medium library."
+msgstr "K-Means 可以创建的最大播放列表数量。较高 = 更多、更小的播放列表。中型音乐库尝试 100。"
+
+#: templates/index.html:264
+msgid "DBSCAN Specific:"
+msgstr "DBSCAN 特定参数："
+
+#: templates/index.html:267
+msgid "DBSCAN Epsilon Min:"
+msgstr "DBSCAN Epsilon 最小值："
+
+#: templates/index.html:270
+msgid ""
+"Minimum distance to consider songs as neighbors. Lower = tighter, more "
+"exclusive clusters. Advanced users only. Range: 0.1-0.5"
+msgstr "考虑歌曲为邻居的最小距离。较低 = 更紧密、更排他的聚类。仅限高级用户。范围：0.1-0.5"
+
+#: templates/index.html:277
+msgid "DBSCAN Epsilon Max:"
+msgstr "DBSCAN Epsilon 最大值："
+
+#: templates/index.html:280
+msgid ""
+"Maximum distance to consider songs as neighbors. Higher = looser, more "
+"inclusive clusters. Advanced users only. Range: 0.1"
+msgstr ""
+
+#: templates/index.html:287
+msgid "DBSCAN Min Samples Min:"
+msgstr "DBSCAN 最小样本数最小值："
+
+#: templates/index.html:290
+msgid ""
+"Minimum songs needed to form a cluster core. Lower = more small "
+"playlists. Advanced users only. Range: 5-20"
+msgstr "形成聚类核心所需的最少歌曲数。较低 = 更多小播放列表。仅限高级用户。范围：5-20"
+
+#: templates/index.html:297
+msgid "DBSCAN Min Samples Max:"
+msgstr "DBSCAN 最小样本数最大值："
+
+#: templates/index.html:300
+msgid ""
+"Maximum songs needed to form a cluster core. Higher = fewer, larger "
+"playlists. Advanced users only. Range: 5-20"
+msgstr "形成聚类核心所需的最大歌曲数。较高 = 较少、较大的播放列表。仅限高级用户。范围：5-20"
+
+#: templates/index.html:308
+msgid "GMM Specific:"
+msgstr "GMM 特定参数："
+
+#: templates/index.html:311
+msgid "GMM Components Min:"
+msgstr "GMM 组件最小值："
+
+#: templates/index.html:314
+msgid ""
+"Minimum number of Gaussian components (similar to clusters). GMM allows "
+"songs to belong partially to multiple playlists. Advanced users only."
+msgstr "高斯组件的最小数量（类似于聚类）。GMM 允许歌曲部分属于多个播放列表。仅限高级用户。"
+
+#: templates/index.html:321
+msgid "GMM Components Max:"
+msgstr "GMM 组件最大值："
+
+#: templates/index.html:324
+msgid ""
+"Maximum number of Gaussian components. Higher = more nuanced groupings "
+"but slower computation. Advanced users only."
+msgstr "高斯组件的最大数量。较高 = 更细致的分组但计算更慢。仅限高级用户。"
+
+#: templates/index.html:332
+msgid "Spectral Specific:"
+msgstr "Spectral 特定参数："
+
+#: templates/index.html:335
+msgid "Spectral Clusters Min:"
+msgstr "Spectral 聚类最小值："
+
+#: templates/index.html:338
+msgid ""
+"Minimum number of clusters for Spectral clustering. Spectral is good at "
+"finding complex patterns and non-spherical groups. Advanced users only."
+msgstr "Spectral 聚类的最小聚类数。Spectral 擅长查找复杂模式和非球形组。仅限高级用户。"
+
+#: templates/index.html:345
+msgid "Spectral Clusters Max:"
+msgstr "Spectral 聚类最大值："
+
+#: templates/index.html:348
+msgid ""
+"Maximum number of clusters for Spectral clustering. Higher = more "
+"playlists but much slower. Advanced users only."
+msgstr "Spectral 聚类的最大聚类数。较高 = 更多播放列表但速度慢得多。仅限高级用户。"
+
+#: templates/index.html:357
+msgid "AI Playlist Naming"
+msgstr "AI 播放列表命名"
+
+#: templates/index.html:361
+msgid "AI Provider:"
+msgstr "AI 提供商："
+
+#: templates/index.html:364
+msgid ""
+"OPTIONAL: Choose an AI service to generate creative playlist names for "
+"your clustering results. This is just for naming - it doesn't affect how "
+"playlists are created. Select \"None\" if you prefer default names or "
+"don't want to use AI."
+msgstr ""
+
+#: templates/index.html:368
+msgid "Ollama"
+msgstr "Ollama"
+
+#: templates/index.html:369
+msgid "OpenAI / OpenRouter"
+msgstr "OpenAI / OpenRouter"
+
+#: templates/index.html:370
+msgid "Gemini"
+msgstr "Gemini"
+
+#: templates/index.html:371
+msgid "Mistral"
+msgstr "Mistral"
+
+#: templates/index.html:372
+msgid "None"
+msgstr "无"
+
+#: templates/index.html:377
+msgid "Ollama Configuration:"
+msgstr "Ollama 配置："
+
+#: templates/index.html:379
+msgid "Ollama Server URL:"
+msgstr "Ollama 服务器 URL："
+
+#: templates/index.html:383
+msgid "Ollama Model Name:"
+msgstr "Ollama 模型名称："
+
+#: templates/index.html:389
+msgid "OpenAI / OpenRouter Configuration:"
+msgstr "OpenAI / OpenRouter 配置："
+
+#: templates/index.html:391
+msgid "OpenAI Server URL:"
+msgstr "OpenAI 服务器 URL："
+
+#: templates/index.html:395
+msgid "OpenAI Model Name:"
+msgstr "OpenAI 模型名称："
+
+#: templates/index.html:401
+msgid "Gemini Configuration:"
+msgstr "Gemini 配置："
+
+#: templates/index.html:403
+msgid "Gemini Model Name:"
+msgstr "Gemini 模型名称："
+
+#: templates/index.html:409
+msgid "Mistral Configuration:"
+msgstr "Mistral 配置："
+
+#: templates/index.html:411
+msgid "Mistral Model Name:"
+msgstr "Mistral 模型名称："
+
+#: templates/index.html:421
+msgid "Run Tasks"
+msgstr "运行任务"
+
+#: templates/index.html:423
+msgid "Start Analysis"
+msgstr "开始分析"
+
+#: templates/index.html:424
+msgid "Start Clustering"
+msgstr "开始聚类"
+
+#: templates/index.html:425
+msgid "Fetch Playlists"
+msgstr "获取播放列表"
+
+#: templates/index.html:427
+msgid "Cancel Current Task"
+msgstr "取消当前任务"
+
+#: templates/index.html:431
+msgid "Task Status"
+msgstr "任务状态"
+
+#: templates/index.html:433
+msgid "Task ID:"
+msgstr "任务 ID："
+
+#: templates/index.html:433 templates/index.html:435 templates/index.html:437
+msgid "N/A"
+msgstr "不适用"
+
+#: templates/index.html:434
+msgid "Running Time:"
+msgstr "运行时间："
+
+#: templates/index.html:435
+msgid "Type:"
+msgstr "类型："
+
+#: templates/index.html:436
+msgid "Status:"
+msgstr "状态："
+
+#: templates/index.html:436
+msgid "IDLE"
+msgstr "空闲"
+
+#: templates/index.html:437
+msgid "Status Message:"
+msgstr "状态消息："
+
+#: templates/index.html:438
+msgid "Progress:"
+msgstr "进度："
+
+#: templates/index.html:443
+msgid "Details / Log:"
+msgstr "详情 / 日志："
+
+#: templates/index.html:450
+msgid "Generated Playlists"
+msgstr "生成的播放列表"
+
+#: templates/sidebar_navi.html:1
+msgid "Analysis and Clustering"
+msgstr "分析与聚类"
+
+#: templates/sidebar_navi.html:2
+msgid "Instant Playlist"
+msgstr "即时播放列表"
+
+#: templates/sidebar_navi.html:3
+msgid "Playlist from Similar Song"
+msgstr "相似歌曲播放列表"
+
+#: templates/sidebar_navi.html:4
+msgid "Artist Similarity"
+msgstr "艺术家相似度"
+
+#: templates/sidebar_navi.html:5
+msgid "Song Path"
+msgstr "歌曲路径"
+
+#: templates/sidebar_navi.html:6
+msgid "Song Alchemy"
+msgstr "歌曲炼金"
+
+#: templates/sidebar_navi.html:7
+msgid "Text Search (CLAP)"
+msgstr "文本搜索 (CLAP)"
+
+#: templates/sidebar_navi.html:8
+msgid "Text Search (MuLan)"
+msgstr "文本搜索 (MuLan)"
+
+#: templates/sidebar_navi.html:9
+msgid "Music Map"
+msgstr "音乐地图"
+
+#: templates/sidebar_navi.html:10
+msgid "Sonic Fingerprint"
+msgstr "声波指纹"
+
+#: templates/sidebar_navi.html:11
+msgid "Waveform"
+msgstr "波形"
+
+#: templates/sidebar_navi.html:13
+msgid "Cleaning"
+msgstr "清理"
+
+#: templates/sidebar_navi.html:14
+msgid "Scheduled Tasks"
+msgstr "计划任务"
+

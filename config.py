@@ -1,6 +1,10 @@
 #AudioMuse-AI/config.py
 import os
 
+# --- Flask-Babel Configuration ---
+BABEL_DEFAULT_LOCALE = 'en'
+BABEL_SUPPORTED_LOCALES = ['en', 'zh']
+
 # --- Media Server Type ---
 MEDIASERVER_TYPE = os.environ.get("MEDIASERVER_TYPE", "jellyfin").lower() # Possible values: jellyfin, navidrome, lyrion, mpd, emby
 
@@ -215,8 +219,12 @@ OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "no-key-needed") # Set to "no-
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR-GEMINI-API-KEY-HERE") # Default API key
 GEMINI_MODEL_NAME = os.environ.get("GEMINI_MODEL_NAME", "gemini-2.5-pro") # Default Gemini model gemini-2.5-pro, alternative gemini-2.5-flash
 
-MISTRAL_API_KEY = os.environ.get("MISTRAL_API_KEY", "YOUR-GEMINI-API-KEY-HERE")
+MISTRAL_API_KEY = os.environ.get("MISTRAL_API_KEY", "YOUR-MISTRAL-API-KEY-HERE")
 MISTRAL_MODEL_NAME = os.environ.get("MISTRAL_MODEL_NAME", "ministral-3b-latest")
+
+DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "YOUR-DEEPSEEK-API-KEY-HERE")
+DEEPSEEK_MODEL_NAME = os.environ.get("DEEPSEEK_MODEL_NAME", "deepseek-chat")
+DEEPSEEK_SERVER_URL = os.environ.get("DEEPSEEK_SERVER_URL", "https://api.deepseek.com/v1")
 
 # AI Request Timeout Configuration
 # Timeout in seconds for AI API requests. Increase this value if using slower hardware or larger models.

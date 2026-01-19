@@ -19,6 +19,7 @@ const ollamaConfigGroup = document.getElementById('ollama-config-group');
 const openaiConfigGroup = document.getElementById('openai-config-group');
 const geminiConfigGroup = document.getElementById('gemini-config-group');
 const mistralConfigGroup = document.getElementById('mistral-config-group');
+const deepseekConfigGroup = document.getElementById('deepseek-config-group');
 
 // Task Buttons
 const startAnalysisBtn = document.getElementById('start-analysis-btn');
@@ -162,6 +163,8 @@ function renderConfig(config) {
     document.getElementById('config-openai_model_name').value = config.openai_model_name || '';
     document.getElementById('config-gemini_model_name').value = config.gemini_model_name || 'gemini-2.5-pro';
     document.getElementById('config-mistral_model_name').value = config.mistral_model_name || 'ministral-3b-latest';
+    document.getElementById('config-deepseek_server_url').value = config.deepseek_server_url || 'https://api.deepseek.com/v1';
+    document.getElementById('config-deepseek_model_name').value = config.deepseek_model_name || 'deepseek-chat';
 }
 
 function toggleClusteringParams() {
@@ -196,6 +199,7 @@ function toggleAiConfig() {
     openaiConfigGroup.classList.add('hidden');
     geminiConfigGroup.classList.add('hidden');
     mistralConfigGroup.classList.add('hidden');
+    deepseekConfigGroup.classList.add('hidden');
 
     if (provider === 'OLLAMA') {
         ollamaConfigGroup.classList.remove('hidden');
@@ -205,6 +209,8 @@ function toggleAiConfig() {
         geminiConfigGroup.classList.remove('hidden');
     } else if (provider === 'MISTRAL') {
         mistralConfigGroup.classList.remove('hidden');
+    } else if (provider === 'DEEPSEEK') {
+        deepseekConfigGroup.classList.remove('hidden');
     }
 }
 
@@ -396,6 +402,8 @@ async function startTask(taskType) {
             openai_model_name: document.getElementById('config-openai_model_name').value,
             gemini_model_name: document.getElementById('config-gemini_model_name').value,
             mistral_model_name: document.getElementById('config-mistral_model_name').value,
+            deepseek_server_url: document.getElementById('config-deepseek_server_url').value,
+            deepseek_model_name: document.getElementById('config-deepseek_model_name').value,
             enable_clustering_embeddings: document.getElementById('config-enable_clustering_embeddings').checked
         });
     }

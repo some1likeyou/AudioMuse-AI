@@ -1,11 +1,13 @@
 import os
 import psycopg2
 from psycopg2.extras import DictCursor
-from flask import Flask, jsonify, request, render_template, g
+from flask import Flask, jsonify, request, render_template, g, session
 import json
 import logging
 import threading
 import time
+
+from flask_babel import Babel, gettext as _
 
 # RQ imports
 from rq.job import Job, JobStatus
@@ -27,7 +29,8 @@ from config import JELLYFIN_URL, JELLYFIN_USER_ID, JELLYFIN_TOKEN, HEADERS, TEMP
   DBSCAN_MIN_SAMPLES_MIN, DBSCAN_MIN_SAMPLES_MAX, GMM_N_COMPONENTS_MIN, GMM_N_COMPONENTS_MAX, \
   SPECTRAL_N_CLUSTERS_MIN, SPECTRAL_N_CLUSTERS_MAX, ENABLE_CLUSTERING_EMBEDDINGS, \
   PCA_COMPONENTS_MIN, PCA_COMPONENTS_MAX, CLUSTERING_RUNS, MOOD_LABELS, TOP_N_MOODS, APP_VERSION, \
-  AI_MODEL_PROVIDER, OLLAMA_SERVER_URL, OLLAMA_MODEL_NAME, OPENAI_SERVER_URL, OPENAI_MODEL_NAME, GEMINI_API_KEY, GEMINI_MODEL_NAME, MISTRAL_MODEL_NAME, \
+  AI_MODEL_PROVIDER, OLLAMA_SERVER_URL, OLLAMA_MODEL_NAME, OPENAI_SERVER_URL, OPENAI_MODEL_NAME, GEMINI_API_KEY, GEMINI_MODEL_NAME, MISTRAL_MODEL_NAME, MISTRAL_API_KEY, \
+  DEEPSEEK_API_KEY, DEEPSEEK_MODEL_NAME, DEEPSEEK_SERVER_URL, \
   TOP_N_PLAYLISTS, PATH_DISTANCE_METRIC, ALCHEMY_DEFAULT_N_RESULTS, ALCHEMY_MAX_N_RESULTS, ALCHEMY_SUBTRACT_DISTANCE, \
   ENABLE_PROXY_FIX, \
   ALCHEMY_SUBTRACT_DISTANCE_ANGULAR, ALCHEMY_SUBTRACT_DISTANCE_EUCLIDEAN  # --- NEW: Import path distance metric and alchemy defaults ---
@@ -38,6 +41,21 @@ if ENABLE_PROXY_FIX:
 
 # --- Flask App Setup ---
 app = Flask(__name__)
+app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
+
+# --- Flask-Babel Setup ---
+babel = Babel(app)
+
+@babel.localeselector
+def get_locale():
+    lang = request.args.get('lang')
+    if lang in ['en', 'zh']:
+        session['lang'] = lang
+    return session.get('lang', request.accept_languages.best_match(['en', 'zh']))
+
+@app.context_processor
+def inject_locale():
+    return dict(_=_, get_locale=get_locale)
 
 # Import helper functions
 from app_helper import (
@@ -114,7 +132,7 @@ def index():
             schema:
               type: string
     """
-    return render_template('index.html', title = 'AudioMuse-AI - Home Page', active='index')
+    return render_template('index.html', title = _('Home Page'), active='index')
 
 
 @app.route('/api/status/<task_id>', methods=['GET'])
@@ -467,6 +485,7 @@ def get_config_endpoint():
         "openai_server_url": OPENAI_SERVER_URL, "openai_model_name": OPENAI_MODEL_NAME,
         "gemini_model_name": GEMINI_MODEL_NAME,
         "mistral_model_name": MISTRAL_MODEL_NAME,
+        "deepseek_server_url": DEEPSEEK_SERVER_URL, "deepseek_model_name": DEEPSEEK_MODEL_NAME,
         "top_n_moods": TOP_N_MOODS, "mood_labels": MOOD_LABELS, "clustering_runs": CLUSTERING_RUNS,
         "top_n_playlists": TOP_N_PLAYLISTS,
         "enable_clustering_embeddings": ENABLE_CLUSTERING_EMBEDDINGS,

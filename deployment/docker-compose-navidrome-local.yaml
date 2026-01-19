@@ -1,0 +1,301 @@
+version: '3.8'
+
+# AudioMuse-AI Docker Compose Configuration
+# Target: Intel N97 NAS with Navidrome and Intel QuickSync
+# Resources: 1 CPU core, 2GB RAM limit per service
+
+services:
+  # Redis service for RQ (task queue)
+  redis:
+    image: redis:7-alpine
+    container_name: audiomuse-redis
+    hostname: audiomuse-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # PostgreSQL database service
+  postgres:
+    image: postgres:15-alpine
+    container_name: audiomuse-postgres
+    hostname: audiomuse-postgres
+    environment:
+      POSTGRES_USER: audiomuse
+      POSTGRES_PASSWORD: audiomusepassword
+      POSTGRES_DB: audiomusedb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 512M
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U audiomuse -d audiomusedb"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # AudioMuse-AI Flask application service
+  audiomuse-ai-flask:
+    image: ghcr.io/neptunehub/audiomuse-ai:latest
+    container_name: audiomuse-ai-flask-app
+    hostname: audiomuse-ai-flask
+    ports:
+      - "8000:8000"
+    environment:
+      # Service Configuration
+      SERVICE_TYPE: "flask"
+      ENABLE_PROXY_FIX: "true"
+      
+      # Media Server Configuration (Navidrome)
+      MEDIASERVER_TYPE: "navidrome"
+      NAVIDROME_URL: "${NAVIDROME_URL:-http://navidrome:4533}"
+      NAVIDROME_USER: "${NAVIDROME_USER}"
+      NAVIDROME_PASSWORD: "${NAVIDROME_PASSWORD}"
+      
+      # Database Configuration
+      POSTGRES_USER: audiomuse
+      POSTGRES_PASSWORD: audiomusepassword
+      POSTGRES_DB: audiomusedb
+      POSTGRES_HOST: "postgres"
+      POSTGRES_PORT: "5432"
+      
+      # Redis Configuration
+      REDIS_URL: "redis://redis:6379/0"
+      
+      # AI Provider Configuration (DeepSeek)
+      AI_MODEL_PROVIDER: "${AI_MODEL_PROVIDER:-DEEPSEEK}"
+      DEEPSEEK_API_KEY: "${DEEPSEEK_API_KEY}"
+      DEEPSEEK_MODEL_NAME: "${DEEPSEEK_MODEL_NAME:-deepseek-chat}"
+      DEEPSEEK_SERVER_URL: "${DEEPSEEK_SERVER_URL:-https://api.deepseek.com/v1}"
+      
+      # Other AI Providers (optional)
+      OPENAI_API_KEY: "${OPENAI_API_KEY:-}"
+      OPENAI_SERVER_URL: "${OPENAI_SERVER_URL:-https://openrouter.ai/api/v1/chat/completions}"
+      OPENAI_MODEL_NAME: "${OPENAI_MODEL_NAME:-}"
+      GEMINI_API_KEY: "${GEMINI_API_KEY:-}"
+      GEMINI_MODEL_NAME: "${GEMINI_MODEL_NAME:-gemini-2.5-pro}"
+      MISTRAL_API_KEY: "${MISTRAL_API_KEY:-}"
+      MISTRAL_MODEL_NAME: "${MISTRAL_MODEL_NAME:-ministral-3b-latest}"
+      
+      # Ollama (local AI, optional)
+      OLLAMA_SERVER_URL: "${OLLAMA_SERVER_URL:-http://localhost:11434/api/generate}"
+      OLLAMA_MODEL_NAME: "${OLLAMA_MODEL_NAME:-llama3.1:8b}"
+      
+      # Clustering Configuration
+      CLUSTER_ALGORITHM: "kmeans"
+      NUM_CLUSTERS_MIN: 40
+      NUM_CLUSTERS_MAX: 100
+      CLUSTERING_RUNS: 5000
+      TOP_N_PLAYLISTS: 10
+      ENABLE_CLUSTERING_EMBEDDINGS: "true"
+      
+      # PCA Configuration
+      PCA_COMPONENTS_MIN: 0
+      PCA_COMPONENTS_MAX: 100
+      
+      # AI Prompt Configuration
+      MAX_SONGS_IN_AI_PROMPT: 25
+      
+      # Feature Extraction Configuration
+      TOP_N_MOODS: 5
+      MOOD_LABELS: "energetic,calm,dark,happy,sad,aggressive,mellow,danceable"
+      
+      # Score Weights
+      SCORE_WEIGHT_DIVERSITY: 2.0
+      SCORE_WEIGHT_PURITY: 1.0
+      SCORE_WEIGHT_SILHOUETTE: 0
+      SCORE_WEIGHT_DAVIES_BOULDIN: 0
+      SCORE_WEIGHT_CALINSKI_HARABASZ: 0
+      
+      # CLAP Text Search (disable on low-resource NAS)
+      CLAP_ENABLED: "${CLAP_ENABLED:-false}"
+      
+      # File Processing
+      TEMP_DIR: "/app/temp_audio"
+      MAX_SONGS_PER_CLUSTER: 0
+      
+      # Performance Tuning
+      USE_GPU_CLUSTERING: "false"
+      
+      # Logging
+      LOG_LEVEL: "INFO"
+      
+    volumes:
+      - temp-audio-flask:/app/temp_audio
+      # Mount music library (read-only)
+      - /volume1/music:/music:ro
+      # Mount Navidrome music data if needed
+      - navidrome-data:/navidrome-data:ro
+    devices:
+      # Intel QuickSync VA-API hardware acceleration
+      - /dev/dri:/dev/dri
+    cap_add:
+      - SYS_NICE
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2G
+        reservations:
+          memory: 1G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/config"]
+      interval: 60s
+      timeout: 30s
+      retries: 3
+      start_period: 60s
+
+  # AudioMuse-AI RQ Worker service
+  audiomuse-ai-worker:
+    image: ghcr.io/neptunehub/audiomuse-ai:latest
+    container_name: audiomuse-ai-worker-instance
+    hostname: audiomuse-ai-worker
+    environment:
+      # Service Configuration
+      SERVICE_TYPE: "worker"
+      ENABLE_PROXY_FIX: "true"
+      
+      # Media Server Configuration (Navidrome)
+      MEDIASERVER_TYPE: "navidrome"
+      NAVIDROME_URL: "${NAVIDROME_URL:-http://navidrome:4533}"
+      NAVIDROME_USER: "${NAVIDROME_USER}"
+      NAVIDROME_PASSWORD: "${NAVIDROME_PASSWORD}"
+      
+      # Database Configuration
+      POSTGRES_USER: audiomuse
+      POSTGRES_PASSWORD: audiomusepassword
+      POSTGRES_DB: audiomusedb
+      POSTGRES_HOST: "postgres"
+      POSTGRES_PORT: "5432"
+      
+      # Redis Configuration
+      REDIS_URL: "redis://redis:6379/0"
+      
+      # AI Provider Configuration (DeepSeek)
+      AI_MODEL_PROVIDER: "${AI_MODEL_PROVIDER:-DEEPSEEK}"
+      DEEPSEEK_API_KEY: "${DEEPSEEK_API_KEY}"
+      DEEPSEEK_MODEL_NAME: "${DEEPSEEK_MODEL_NAME:-deepseek-chat}"
+      DEEPSEEK_SERVER_URL: "${DEEPSEEK_SERVER_URL:-https://api.deepseek.com/v1}"
+      
+      # Other AI Providers (optional)
+      OPENAI_API_KEY: "${OPENAI_API_KEY:-}"
+      OPENAI_SERVER_URL: "${OPENAI_SERVER_URL:-https://openrouter.ai/api/v1/chat/completions}"
+      OPENAI_MODEL_NAME: "${OPENAI_MODEL_NAME:-}"
+      GEMINI_API_KEY: "${GEMINI_API_KEY:-}"
+      GEMINI_MODEL_NAME: "${GEMINI_MODEL_NAME:-gemini-2.5-pro}"
+      MISTRAL_API_KEY: "${MISTRAL_API_KEY:-}"
+      MISTRAL_MODEL_NAME: "${MISTRAL_MODEL_NAME:-ministral-3b-latest}"
+      
+      # Ollama (local AI, optional)
+      OLLAMA_SERVER_URL: "${OLLAMA_SERVER_URL:-http://localhost:11434/api/generate}"
+      OLLAMA_MODEL_NAME: "${OLLAMA_MODEL_NAME:-llama3.1:8b}"
+      
+      # Clustering Configuration
+      CLUSTER_ALGORITHM: "kmeans"
+      NUM_CLUSTERS_MIN: 40
+      NUM_CLUSTERS_MAX: 100
+      CLUSTERING_RUNS: 5000
+      TOP_N_PLAYLISTS: 10
+      ENABLE_CLUSTERING_EMBEDDINGS: "true"
+      
+      # PCA Configuration
+      PCA_COMPONENTS_MIN: 0
+      PCA_COMPONENTS_MAX: 100
+      
+      # AI Prompt Configuration
+      MAX_SONGS_IN_AI_PROMPT: 25
+      
+      # Feature Extraction Configuration
+      TOP_N_MOODS: 5
+      MOOD_LABELS: "energetic,calm,dark,happy,sad,aggressive,mellow,danceable"
+      
+      # Score Weights
+      SCORE_WEIGHT_DIVERSITY: 2.0
+      SCORE_WEIGHT_PURITY: 1.0
+      SCORE_WEIGHT_SILHOUETTE: 0
+      SCORE_WEIGHT_DAVIES_BOULDIN: 0
+      SCORE_WEIGHT_CALINSKI_HARABASZ: 0
+      
+      # CLAP Text Search (disable on low-resource NAS)
+      CLAP_ENABLED: "${CLAP_ENABLED:-false}"
+      
+      # File Processing
+      TEMP_DIR: "/app/temp_audio"
+      MAX_SONGS_PER_CLUSTER: 0
+      
+      # Performance Tuning
+      USE_GPU_CLUSTERING: "false"
+      
+      # Logging
+      LOG_LEVEL: "INFO"
+      
+    volumes:
+      - temp-audio-worker:/app/temp_audio
+      # Mount music library (read-only)
+      - /volume1/music:/music:ro
+      # Mount Navidrome music data if needed
+      - navidrome-data:/navidrome-data:ro
+    devices:
+      # Intel QuickSync VA-API hardware acceleration
+      - /dev/dri:/dev/dri
+    cap_add:
+      - SYS_NICE
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2G
+        reservations:
+          memory: 1G
+
+# Define volumes for persistent data and temporary files
+volumes:
+  redis-data:
+    driver: local
+  postgres-data:
+    driver: local
+  temp-audio-flask:
+    driver: local
+  temp-audio-worker:
+    driver: local
+  navidrome-data:
+    driver: local
+
+# Network configuration
+networks:
+  default:
+    name: audiomuse-network
+    driver: bridge

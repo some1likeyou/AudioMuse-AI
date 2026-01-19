@@ -49,6 +49,34 @@
     transition: color 0.3s;
 }
 
+/* --- Language Switcher Styles --- */
+.language-switcher {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 1001;
+    font-size: 0.9rem;
+}
+
+.language-switcher a {
+    color: #6B7280;
+    text-decoration: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.language-switcher a:hover {
+    color: #1F2937;
+    background-color: #E5E7EB;
+}
+
+.language-switcher a.active {
+    color: #1F2937;
+    font-weight: 600;
+    background-color: #D1D5DB;
+}
+
 /* When the sidebar is open, make the button light */
 .sidebar.open + .main-content .menu-toggle {
     color: white;

@@ -21,7 +21,7 @@ def call_ai_with_mcp_tools(
     Call AI provider with MCP tool definitions and handle tool calling flow.
     
     Args:
-        provider: AI provider ('GEMINI', 'OPENAI', 'MISTRAL', 'OLLAMA')
+        provider: AI provider ('GEMINI', 'OPENAI', 'MISTRAL', 'OLLAMA', 'DEEPSEEK')
         user_message: The user's natural language request
         tools: List of MCP tool definitions
         ai_config: Configuration dict with API keys, URLs, model names
@@ -38,6 +38,8 @@ def call_ai_with_mcp_tools(
         return _call_mistral_with_tools(user_message, tools, ai_config, log_messages)
     elif provider == "OLLAMA":
         return _call_ollama_with_tools(user_message, tools, ai_config, log_messages)
+    elif provider == "DEEPSEEK":
+        return _call_deepseek_with_tools(user_message, tools, ai_config, log_messages)
     else:
         return {"error": f"Unsupported AI provider: {provider}"}
 
@@ -948,3 +950,64 @@ def get_mcp_tools() -> List[Dict]:
     ])
     
     return tools
+
+
+def _call_deepseek_with_tools(user_message: str, tools: List[Dict], ai_config: Dict, log_messages: List[str]) -> Dict:
+    """Call DeepSeek with function calling (OpenAI-compatible API)."""
+    try:
+        import httpx
+        
+        api_key = ai_config.get('deepseek_key')
+        model_name = ai_config.get('deepseek_model', 'deepseek-chat')
+        
+        if not api_key or api_key == "YOUR-DEEPSEEK-API-KEY-HERE":
+            return {"error": "Valid DeepSeek API key required"}
+        
+        # Build messages
+        messages = [
+            {
+                "role": "system",
+                "content": "You are a helpful music assistant. You have access to tools to search and manage music playlists."
+            },
+            {
+                "role": "user",
+                "content": user_message
+            }
+        ]
+        
+        # Make API request
+        client = httpx.Client(timeout=60.0)
+        response = client.post(
+            "https://api.deepseek.com/chat/completions",
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json"
+            },
+            json={
+                "model": model_name,
+                "messages": messages,
+                "tools": tools,
+                "tool_choice": "auto",
+                "temperature": 0.7
+            }
+        )
+        response.raise_for_status()
+        result = response.json()
+        
+        # Extract tool calls
+        choice = result.get("choices", [{}])[0]
+        message = choice.get("message", {})
+        tool_calls = message.get("tool_calls", [])
+        
+        if tool_calls:
+            log_messages.append(f"DeepSeek requested {len(tool_calls)} tool call(s)")
+            return {"tool_calls": tool_calls}
+        else:
+            # No tool calls, return the response text
+            content = message.get("content", "")
+            log_messages.append(f"DeepSeek response: {content[:100]}...")
+            return {"content": content}
+            
+    except Exception as e:
+        logger.error("Error calling DeepSeek API: %s", e, exc_info=True)
+        return {"error": f"DeepSeek API error: {str(e)}"}

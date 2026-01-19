@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ get_locale() }}">
 <head>
     <meta charset="UTF-8">
     <meta name="app-version" content="{{ app_version }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ title }}</title>
+    <title>AudioMuse-AI - {{ title }}</title>
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon-32x32.ico') }}" sizes="32x32">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon-96x96.ico') }}" sizes="96x96">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon-128x128.ico') }}" sizes="128x128">
@@ -29,6 +29,10 @@
 
         <div class="main-content" id="main-content">
             <button class="menu-toggle">&#9776;</button>
+            <div class="language-switcher">
+                <a href="?lang=en" {% if get_locale() == 'en' %}class="active"{% endif %}>English</a> |
+                <a href="?lang=zh" {% if get_locale() == 'zh' %}class="active"{% endif %}>中文</a>
+            </div>
             <div class="container">
                 {% block content %}
                     {# content from template will be set here #}

@@ -79,6 +79,7 @@
                         <option value="OPENAI">OpenAI / OpenRouter</option>
                         <option value="GEMINI">Gemini</option>
                         <option value="MISTRAL">Mistral</option>
+                        <option value="DEEPSEEK">DeepSeek</option>
                     </select>
                 </div>
                 <div id="ollamaConfig" class="hidden">
@@ -129,6 +130,16 @@
                         </span>
                     </label>
                     <input type="text" id="mistralModel" placeholder="e.g., ministral-3b-latest">
+                </div>
+                <div id="deepseekConfig" class="hidden">
+                    <label for="deepseekModel" class="label-with-tooltip">
+                        DeepSeek Model
+                        <span class="info-tooltip" tabindex="0">
+                            <span class="info-icon"></span>
+                            <span class="tooltip-text">DeepSeek's model to use. deepseek-chat is the standard model with excellent performance at lower cost.</span>
+                        </span>
+                    </label>
+                    <input type="text" id="deepseekModel" placeholder="e.g., deepseek-chat">
                 </div>
             </div>
         </fieldset>
@@ -199,12 +210,14 @@
             const openaiConfigDiv = document.getElementById('openaiConfig');
             const geminiConfigDiv = document.getElementById('geminiConfig');
             const mistralConfigDiv = document.getElementById('mistralConfig');
+            const deepseekConfigDiv = document.getElementById('deepseekConfig');
             const ollamaModelSelect = document.getElementById('ollamaModel');
             const ollamaServerUrlInput = document.getElementById('ollamaServerUrl'); // Added Ollama Server URL input
             const openaiModelSelect = document.getElementById('openaiModel');
             const openaiServerUrlInput = document.getElementById('openaiServerUrl');
             const geminiModelSelect = document.getElementById('geminiModel');
             const mistralModelSelect = document.getElementById('mistralModel');
+            const deepseekModelSelect = document.getElementById('deepseekModel');
             const playlistForm = document.getElementById('playlistForm');
             const userInput = document.getElementById('userInput');
             const submitButton = document.getElementById('submitChat');
@@ -251,6 +264,7 @@
 
                 geminiModelSelect.value = globalConfig.default_gemini_model_name || "gemini-2.5-pro";
                 mistralModelSelect.value = globalConfig.default_mistral_model_name || "ministral-3b-latest";
+                deepseekModelSelect.value = globalConfig.default_deepseek_model_name || "deepseek-chat";
             }
 
             /**
@@ -264,26 +278,37 @@
                     openaiConfigDiv.classList.add('hidden');
                     geminiConfigDiv.classList.add('hidden');
                     mistralConfigDiv.classList.add('hidden');
+                    deepseekConfigDiv.classList.add('hidden');
                 } else if (provider === 'OPENAI') {
                     ollamaConfigDiv.classList.add('hidden');
                     openaiConfigDiv.classList.remove('hidden');
                     geminiConfigDiv.classList.add('hidden');
                     mistralConfigDiv.classList.add('hidden');
+                    deepseekConfigDiv.classList.add('hidden');
                 } else if (provider === 'GEMINI') {
                     ollamaConfigDiv.classList.add('hidden');
                     openaiConfigDiv.classList.add('hidden');
                     geminiConfigDiv.classList.remove('hidden');
                     mistralConfigDiv.classList.add('hidden');
+                    deepseekConfigDiv.classList.add('hidden');
                 } else if (provider === 'MISTRAL') {
                     ollamaConfigDiv.classList.add('hidden');
                     openaiConfigDiv.classList.add('hidden');
                     geminiConfigDiv.classList.add('hidden');
                     mistralConfigDiv.classList.remove('hidden');
+                    deepseekConfigDiv.classList.add('hidden');
+                } else if (provider === 'DEEPSEEK') {
+                    ollamaConfigDiv.classList.add('hidden');
+                    openaiConfigDiv.classList.add('hidden');
+                    geminiConfigDiv.classList.add('hidden');
+                    mistralConfigDiv.classList.add('hidden');
+                    deepseekConfigDiv.classList.remove('hidden');
                 } else {
                     ollamaConfigDiv.classList.add('hidden');
                     openaiConfigDiv.classList.add('hidden');
                     geminiConfigDiv.classList.add('hidden');
                     mistralConfigDiv.classList.add('hidden');
+                    deepseekConfigDiv.classList.add('hidden');
                 }
             }
 
@@ -318,6 +343,8 @@
                     // REMOVED: The API key is no longer sent from the frontend
                 } else if (payload.ai_provider === 'MISTRAL') {
                     payload.ai_model = mistralModelSelect.value;
+                } else if (payload.ai_provider === 'DEEPSEEK') {
+                    payload.ai_model = deepseekModelSelect.value;
                 }
                 try {
                     const response = await fetch("{{ url_for('chat_bp.chat_playlist_api') }}", {

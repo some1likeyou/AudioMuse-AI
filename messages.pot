@@ -1,0 +1,578 @@
+# Translations template for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-01-19 11:13+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: app.py:134
+msgid "Home Page"
+msgstr ""
+
+#: templates/index.html:8
+msgid "AudioMuse-AI - Analysis and Clustering"
+msgstr ""
+
+#: templates/index.html:9
+msgid "Discover new playlists by analyzing your music's unique fingerprint."
+msgstr ""
+
+#: templates/index.html:13
+msgid "Basic"
+msgstr ""
+
+#: templates/index.html:14
+msgid "Advanced"
+msgstr ""
+
+#: templates/index.html:21
+msgid "Analysis Parameters"
+msgstr ""
+
+#: templates/index.html:25
+msgid "Number of Recent Albums:"
+msgstr ""
+
+#: templates/index.html:28
+msgid ""
+"How many recently added albums to analyze. Set to 0 to analyze your "
+"entire music library. Use a smaller number (like 5-10) to quickly test "
+"new additions without re-analyzing everything."
+msgstr ""
+
+#: templates/index.html:35
+msgid "Top N Moods:"
+msgstr ""
+
+#: templates/index.html:38
+msgid ""
+"How many dominant moods to identify for each song (e.g., energetic, calm,"
+" dark). Higher numbers capture more subtle moods but use more processing "
+"power. Default of 5 works well for most libraries."
+msgstr ""
+
+#: templates/index.html:47
+msgid "Clustering Parameters"
+msgstr ""
+
+#: templates/index.html:51 templates/index.html:61
+msgid "Clustering Algorithm:"
+msgstr ""
+
+#: templates/index.html:54
+msgid ""
+"The method used to group similar songs together. K-Means is recommended "
+"for most users - it's fast and creates balanced playlists. Advanced users"
+" can try other algorithms."
+msgstr ""
+
+#: templates/index.html:57 templates/index.html:68
+msgid "K-Means"
+msgstr ""
+
+#: templates/index.html:64
+msgid ""
+"K-Means: Balanced groups (recommended). DBSCAN: Finds natural clusters of"
+" any shape. GMM: Softer boundaries between groups. Spectral: Good for "
+"complex patterns."
+msgstr ""
+
+#: templates/index.html:69
+msgid "DBSCAN"
+msgstr ""
+
+#: templates/index.html:70
+msgid "GMM"
+msgstr ""
+
+#: templates/index.html:71
+msgid "Spectral"
+msgstr ""
+
+#: templates/index.html:76
+msgid "TOP Playlist Number:"
+msgstr ""
+
+#: templates/index.html:79
+msgid ""
+"How many playlists to create from your library. More playlists means "
+"smaller, more focused collections. Try 8-12 for a medium library "
+"(1000-5000 songs)."
+msgstr ""
+
+#: templates/index.html:86
+msgid "Clustering Runs:"
+msgstr ""
+
+#: templates/index.html:89
+msgid ""
+"How many times to try different groupings to find the best playlists. "
+"More runs = better results but takes longer. 5000 is a good balance for "
+"most libraries."
+msgstr ""
+
+#: templates/index.html:96
+msgid "Max Distance:"
+msgstr ""
+
+#: templates/index.html:99
+msgid ""
+"Maximum sonic difference allowed between songs in the same playlist. "
+"Lower values = more similar songs within each playlist. Range: 0.0 "
+"(identical) to 1.0 (very different)."
+msgstr ""
+
+#: templates/index.html:106
+msgid "Max Songs Per Cluster:"
+msgstr ""
+
+#: templates/index.html:109
+msgid ""
+"Limit playlist size to this many songs. Set to 0 for no limit. Useful to "
+"prevent huge playlists that are hard to listen through."
+msgstr ""
+
+#: templates/index.html:116
+msgid "PCA Components Min:"
+msgstr ""
+
+#: templates/index.html:119
+msgid ""
+"Principal Component Analysis simplifies song data. Minimum number of "
+"components to use (0 to disable PCA). Lower = faster but less accurate. "
+"Advanced users only."
+msgstr ""
+
+#: templates/index.html:126
+msgid "PCA Components Max:"
+msgstr ""
+
+#: templates/index.html:129
+msgid ""
+"Maximum number of PCA components. Higher = more detailed analysis but "
+"slower. For embeddings: try 50-199. For feature vectors: try 8-20."
+msgstr ""
+
+#: templates/index.html:136
+msgid "Min Songs Per Genre for Stratification:"
+msgstr ""
+
+#: templates/index.html:139
+msgid ""
+"When testing different clustering approaches, sample at least this many "
+"songs from each genre. Ensures all music styles are represented. Default:"
+" 100."
+msgstr ""
+
+#: templates/index.html:146
+msgid "Stratified Sampling Target Percentile:"
+msgstr ""
+
+#: templates/index.html:149
+msgid ""
+"Percentile used to determine target sample size per genre (0-100). 50 "
+"means use median genre size. Higher = more songs sampled. Advanced users "
+"only."
+msgstr ""
+
+#: templates/index.html:156
+msgid "Diversity Score Weight:"
+msgstr ""
+
+#: templates/index.html:159
+msgid ""
+"How much to prioritize different moods BETWEEN playlists. Higher = each "
+"playlist has a more unique vibe. Default: 2.0"
+msgstr ""
+
+#: templates/index.html:166
+msgid "Purity Score Weight:"
+msgstr ""
+
+#: templates/index.html:169
+msgid ""
+"How much to prioritize similar moods WITHIN each playlist. Higher = more "
+"consistent vibe within playlists. Default: 1.0"
+msgstr ""
+
+#: templates/index.html:176
+msgid "Other Feature Diversity Weight:"
+msgstr ""
+
+#: templates/index.html:179
+msgid ""
+"Like Diversity Score but for technical audio features (tempo, key, etc.) "
+"instead of moods. Usually keep at 0 to focus on moods."
+msgstr ""
+
+#: templates/index.html:186
+msgid "Other Feature Purity Weight:"
+msgstr ""
+
+#: templates/index.html:189
+msgid ""
+"Like Purity Score but for technical audio features instead of moods. "
+"Usually keep at 0 to focus on moods."
+msgstr ""
+
+#: templates/index.html:196
+msgid "Silhouette Score Weight:"
+msgstr ""
+
+#: templates/index.html:199
+msgid ""
+"Measures how well-separated clusters are. Higher = prioritize clear "
+"boundaries between playlists. Usually keep at 0 unless experimenting."
+msgstr ""
+
+#: templates/index.html:206
+msgid "Davies-Bouldin Score Weight:"
+msgstr ""
+
+#: templates/index.html:209
+msgid ""
+"Another cluster separation measure. Lower is better (so this score is "
+"minimized). Usually keep at 0 unless experimenting."
+msgstr ""
+
+#: templates/index.html:216
+msgid "Calinski-Harabasz Score Weight:"
+msgstr ""
+
+#: templates/index.html:219
+msgid ""
+"Measures cluster quality by comparing within-cluster vs between-cluster "
+"variance. Usually keep at 0 unless experimenting."
+msgstr ""
+
+#: templates/index.html:226
+msgid "Use Embeddings for Clustering:"
+msgstr ""
+
+#: templates/index.html:229
+msgid ""
+"Checked: Use AI-learned song fingerprints (more accurate). Unchecked: Use"
+" calculated features like tempo and energy (faster). Recommended: keep "
+"checked."
+msgstr ""
+
+#: templates/index.html:238
+msgid "K-Means Specific:"
+msgstr ""
+
+#: templates/index.html:242
+msgid "Min Clusters:"
+msgstr ""
+
+#: templates/index.html:245
+msgid ""
+"Minimum number of playlists K-Means can create. Lower = fewer, larger "
+"playlists. Try 40 for a medium library."
+msgstr ""
+
+#: templates/index.html:252
+msgid "Max Clusters:"
+msgstr ""
+
+#: templates/index.html:255
+msgid ""
+"Maximum number of playlists K-Means can create. Higher = more, smaller "
+"playlists. Try 100 for a medium library."
+msgstr ""
+
+#: templates/index.html:264
+msgid "DBSCAN Specific:"
+msgstr ""
+
+#: templates/index.html:267
+msgid "DBSCAN Epsilon Min:"
+msgstr ""
+
+#: templates/index.html:270
+msgid ""
+"Minimum distance to consider songs as neighbors. Lower = tighter, more "
+"exclusive clusters. Advanced users only. Range: 0.1-0.5"
+msgstr ""
+
+#: templates/index.html:277
+msgid "DBSCAN Epsilon Max:"
+msgstr ""
+
+#: templates/index.html:280
+msgid ""
+"Maximum distance to consider songs as neighbors. Higher = looser, more "
+"inclusive clusters. Advanced users only. Range: 0.1"
+msgstr ""
+
+#: templates/index.html:287
+msgid "DBSCAN Min Samples Min:"
+msgstr ""
+
+#: templates/index.html:290
+msgid ""
+"Minimum songs needed to form a cluster core. Lower = more small "
+"playlists. Advanced users only. Range: 5-20"
+msgstr ""
+
+#: templates/index.html:297
+msgid "DBSCAN Min Samples Max:"
+msgstr ""
+
+#: templates/index.html:300
+msgid ""
+"Maximum songs needed to form a cluster core. Higher = fewer, larger "
+"playlists. Advanced users only. Range: 5-20"
+msgstr ""
+
+#: templates/index.html:308
+msgid "GMM Specific:"
+msgstr ""
+
+#: templates/index.html:311
+msgid "GMM Components Min:"
+msgstr ""
+
+#: templates/index.html:314
+msgid ""
+"Minimum number of Gaussian components (similar to clusters). GMM allows "
+"songs to belong partially to multiple playlists. Advanced users only."
+msgstr ""
+
+#: templates/index.html:321
+msgid "GMM Components Max:"
+msgstr ""
+
+#: templates/index.html:324
+msgid ""
+"Maximum number of Gaussian components. Higher = more nuanced groupings "
+"but slower computation. Advanced users only."
+msgstr ""
+
+#: templates/index.html:332
+msgid "Spectral Specific:"
+msgstr ""
+
+#: templates/index.html:335
+msgid "Spectral Clusters Min:"
+msgstr ""
+
+#: templates/index.html:338
+msgid ""
+"Minimum number of clusters for Spectral clustering. Spectral is good at "
+"finding complex patterns and non-spherical groups. Advanced users only."
+msgstr ""
+
+#: templates/index.html:345
+msgid "Spectral Clusters Max:"
+msgstr ""
+
+#: templates/index.html:348
+msgid ""
+"Maximum number of clusters for Spectral clustering. Higher = more "
+"playlists but much slower. Advanced users only."
+msgstr ""
+
+#: templates/index.html:357
+msgid "AI Playlist Naming"
+msgstr ""
+
+#: templates/index.html:361
+msgid "AI Provider:"
+msgstr ""
+
+#: templates/index.html:364
+msgid ""
+"OPTIONAL: Choose an AI service to generate creative playlist names for "
+"your clustering results. This is just for naming - it doesn't affect how "
+"playlists are created. Select \"None\" if you prefer default names or "
+"don't want to use AI."
+msgstr ""
+
+#: templates/index.html:368
+msgid "Ollama"
+msgstr ""
+
+#: templates/index.html:369
+msgid "OpenAI / OpenRouter"
+msgstr ""
+
+#: templates/index.html:370
+msgid "Gemini"
+msgstr ""
+
+#: templates/index.html:371
+msgid "Mistral"
+msgstr ""
+
+#: templates/index.html:372
+msgid "None"
+msgstr ""
+
+#: templates/index.html:377
+msgid "Ollama Configuration:"
+msgstr ""
+
+#: templates/index.html:379
+msgid "Ollama Server URL:"
+msgstr ""
+
+#: templates/index.html:383
+msgid "Ollama Model Name:"
+msgstr ""
+
+#: templates/index.html:389
+msgid "OpenAI / OpenRouter Configuration:"
+msgstr ""
+
+#: templates/index.html:391
+msgid "OpenAI Server URL:"
+msgstr ""
+
+#: templates/index.html:395
+msgid "OpenAI Model Name:"
+msgstr ""
+
+#: templates/index.html:401
+msgid "Gemini Configuration:"
+msgstr ""
+
+#: templates/index.html:403
+msgid "Gemini Model Name:"
+msgstr ""
+
+#: templates/index.html:409
+msgid "Mistral Configuration:"
+msgstr ""
+
+#: templates/index.html:411
+msgid "Mistral Model Name:"
+msgstr ""
+
+#: templates/index.html:421
+msgid "Run Tasks"
+msgstr ""
+
+#: templates/index.html:423
+msgid "Start Analysis"
+msgstr ""
+
+#: templates/index.html:424
+msgid "Start Clustering"
+msgstr ""
+
+#: templates/index.html:425
+msgid "Fetch Playlists"
+msgstr ""
+
+#: templates/index.html:427
+msgid "Cancel Current Task"
+msgstr ""
+
+#: templates/index.html:431
+msgid "Task Status"
+msgstr ""
+
+#: templates/index.html:433
+msgid "Task ID:"
+msgstr ""
+
+#: templates/index.html:433 templates/index.html:435 templates/index.html:437
+msgid "N/A"
+msgstr ""
+
+#: templates/index.html:434
+msgid "Running Time:"
+msgstr ""
+
+#: templates/index.html:435
+msgid "Type:"
+msgstr ""
+
+#: templates/index.html:436
+msgid "Status:"
+msgstr ""
+
+#: templates/index.html:436
+msgid "IDLE"
+msgstr ""
+
+#: templates/index.html:437
+msgid "Status Message:"
+msgstr ""
+
+#: templates/index.html:438
+msgid "Progress:"
+msgstr ""
+
+#: templates/index.html:443
+msgid "Details / Log:"
+msgstr ""
+
+#: templates/index.html:450
+msgid "Generated Playlists"
+msgstr ""
+
+#: templates/sidebar_navi.html:1
+msgid "Analysis and Clustering"
+msgstr ""
+
+#: templates/sidebar_navi.html:2
+msgid "Instant Playlist"
+msgstr ""
+
+#: templates/sidebar_navi.html:3
+msgid "Playlist from Similar Song"
+msgstr ""
+
+#: templates/sidebar_navi.html:4
+msgid "Artist Similarity"
+msgstr ""
+
+#: templates/sidebar_navi.html:5
+msgid "Song Path"
+msgstr ""
+
+#: templates/sidebar_navi.html:6
+msgid "Song Alchemy"
+msgstr ""
+
+#: templates/sidebar_navi.html:7
+msgid "Text Search (CLAP)"
+msgstr ""
+
+#: templates/sidebar_navi.html:8
+msgid "Text Search (MuLan)"
+msgstr ""
+
+#: templates/sidebar_navi.html:9
+msgid "Music Map"
+msgstr ""
+
+#: templates/sidebar_navi.html:10
+msgid "Sonic Fingerprint"
+msgstr ""
+
+#: templates/sidebar_navi.html:11
+msgid "Waveform"
+msgstr ""
+
+#: templates/sidebar_navi.html:13
+msgid "Cleaning"
+msgstr ""
+
+#: templates/sidebar_navi.html:14
+msgid "Scheduled Tasks"
+msgstr ""
+
